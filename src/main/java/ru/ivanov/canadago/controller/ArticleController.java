@@ -18,7 +18,7 @@ import ru.ivanov.canadago.model.Article;
 import ru.ivanov.canadago.repository.ArticleRepository;
 
 @RestController
-@RequestMapping("/api/articles")
+@RequestMapping("/api/article")
 @RequiredArgsConstructor
 public class ArticleController {
 
@@ -40,14 +40,13 @@ public class ArticleController {
       .orElseThrow(() -> new ResourceNotFoundException("Article not found"));
   }
 
-  @PutMapping("/{id}")
-  public Article updateArticle(@PathVariable Long id, @RequestBody Article articleData) {
-    Article article = articleRepository.findById(id)
+  @PutMapping
+  public Article updateArticle(@RequestBody Article articleData) {
+    Article article = articleRepository.findById(articleData.getId())
       .orElseThrow(() -> new ResourceNotFoundException("Article not found"));
 
     article.setTitle(articleData.getTitle());
     article.setContent(articleData.getContent());
-    article.setDate(articleData.getDate());
 
     return articleRepository.save(article);
   }

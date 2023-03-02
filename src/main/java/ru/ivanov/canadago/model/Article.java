@@ -1,6 +1,6 @@
 package ru.ivanov.canadago.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,6 +25,7 @@ public class Article {
   @Column(name = "content", nullable = false)
   private String content;
 
-  @Column(name = "date", nullable = false)
-  private LocalDate date;
+  @Column(name = "created_at", nullable = false)
+  private LocalDateTime createdAt = LocalDateTime.now();
+
 }
