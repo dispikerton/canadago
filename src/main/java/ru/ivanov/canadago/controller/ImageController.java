@@ -41,7 +41,7 @@ public class ImageController {
     return ResponseEntity.notFound().build();
   }
 
-  @PostMapping("/upload")
+  @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Operation(summary = "Загрузить картинку")
   public ResponseEntity<String> handleImageUpload(@RequestParam("file") MultipartFile file) {
     try {
