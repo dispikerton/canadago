@@ -1,5 +1,6 @@
 package ru.ivanov.canadago.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import ru.ivanov.canadago.exception.ResourceNotFoundException;
 import ru.ivanov.canadago.model.Article;
+import ru.ivanov.canadago.model.Image;
 import ru.ivanov.canadago.repository.ArticleRepository;
+import ru.ivanov.canadago.repository.ImageRepository;
 
 @RestController
 @RequestMapping("/api/article")
@@ -23,6 +26,7 @@ import ru.ivanov.canadago.repository.ArticleRepository;
 public class ArticleController {
 
   private final ArticleRepository articleRepository;
+  private final ImageRepository imageRepository;
 
   @GetMapping
   public List<Article> getArticles() {
@@ -30,8 +34,17 @@ public class ArticleController {
   }
 
   @PostMapping
-  public Article createArticle(@RequestBody Article article) {
-    return articleRepository.save(article);
+  public ResponseEntity<Article> createArticle(@RequestBody ArticleRequest articleRequest) {
+    Article article = new Article();
+    article.setTitle(articleRequest.getTitle());
+    article.setContent(articleRequest.getContent());
+    Article savedArticle = articleRepository.save(article);
+    List<Image> images = imageRepository.findAllByIdIn(articleRequest.getImageIds());
+    images.forEach(image -> {
+      image.setArticle(article);
+      imageRepository.save(image);
+    });
+    return ResponseEntity.created(URI.create("/articles/" + savedArticle.getId())).body(savedArticle);
   }
 
   @GetMapping("/{id}")
