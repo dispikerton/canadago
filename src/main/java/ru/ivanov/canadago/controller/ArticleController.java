@@ -48,9 +48,16 @@ public class ArticleController {
   }
 
   @GetMapping("/{id}")
-  public Article getArticleById(@PathVariable Long id) {
-    return articleRepository.findById(id)
+  public ArticleResponse getArticleById(@PathVariable Long id) {
+    Article article = articleRepository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException("Article not found"));
+    ArticleResponse articleRequest = new ArticleResponse();
+    articleRequest.setId(article.getId());
+    articleRequest.setTitle(article.getTitle());
+    articleRequest.setContent(article.getContent());
+    List<Image> images = imageRepository.findAllByArticleId(article.getId());
+    articleRequest.setImages(images);
+    return articleRequest;
   }
 
   @PutMapping

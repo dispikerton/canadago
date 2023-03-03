@@ -9,4 +9,5 @@ import ru.ivanov.canadago.model.Image;
 
 public interface ImageRepository extends JpaRepository<Image, UUID> {
   List<Image> findAllByIdIn(List<UUID> imageIds);
+  List<Image> findAllByArticleId(Long id);
 }
