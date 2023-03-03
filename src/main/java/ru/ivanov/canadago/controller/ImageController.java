@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import ru.ivanov.canadago.model.Image;
 import ru.ivanov.canadago.repository.ImageRepository;
@@ -27,6 +28,7 @@ public class ImageController {
   private final ImageRepository imageRepository;
 
   @GetMapping
+  @Operation(summary = "Получение картинки по id")
   public ResponseEntity<byte[]> getImage(@RequestParam String id) {
     Optional<Image> imageOptional = imageRepository.findById(UUID.fromString(id));
     if (imageOptional.isPresent()) {
@@ -40,6 +42,7 @@ public class ImageController {
   }
 
   @PostMapping("/upload")
+  @Operation(summary = "Загрузить картинку")
   public ResponseEntity<String> handleImageUpload(@RequestParam("file") MultipartFile file) {
     try {
       Image image = new Image();
