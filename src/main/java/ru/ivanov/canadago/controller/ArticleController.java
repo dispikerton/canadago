@@ -19,9 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import ru.ivanov.canadago.exception.ResourceNotFoundException;
 import ru.ivanov.canadago.model.Article;
-import ru.ivanov.canadago.model.Image;
 import ru.ivanov.canadago.repository.ArticleRepository;
-import ru.ivanov.canadago.repository.ImageRepository;
 
 @CrossOrigin
 @RestController
@@ -30,7 +28,6 @@ import ru.ivanov.canadago.repository.ImageRepository;
 public class ArticleController {
 
   private final ArticleRepository articleRepository;
-  private final ImageRepository imageRepository;
 
   @GetMapping("/all")
   @Operation(summary = "Получение всех статей")
@@ -46,11 +43,6 @@ public class ArticleController {
     article.setTitle(articleRequest.getTitle());
     article.setContent(articleRequest.getContent());
     Article savedArticle = articleRepository.save(article);
-    List<Image> images = imageRepository.findAllByIdIn(articleRequest.getImageIds());
-    images.forEach(image -> {
-      image.setArticle(article);
-      imageRepository.save(image);
-    });
     return ResponseEntity.created(URI.create("/articles/" + savedArticle.getId())).body(savedArticle);
   }
 
@@ -63,8 +55,6 @@ public class ArticleController {
     articleRequest.setId(article.getId());
     articleRequest.setTitle(article.getTitle());
     articleRequest.setContent(article.getContent());
-    List<Image> images = imageRepository.findAllByArticleId(article.getId());
-    articleRequest.setImages(images);
     return articleRequest;
   }
 
@@ -78,13 +68,6 @@ public class ArticleController {
     article.setTitle(articleData.getTitle());
     article.setContent(articleData.getContent());
 
-    List<Image> images = imageRepository.findAllByIdIn(articleData.getImageIds());
-    imageRepository.deleteAllInBatch(images);
-    images.forEach(image -> {
-      image.setArticle(article);
-      imageRepository.save(image);
-    });
-
     return articleRepository.save(article);
   }
 
@@ -92,8 +75,6 @@ public class ArticleController {
   @Operation(summary = "Удаление статьи")
   @Transactional
   public ResponseEntity<Article> deleteArticle(@PathVariable Long id) {
-    List<Image> images = imageRepository.findAllByArticleId(id);
-    imageRepository.deleteAllInBatch(images);
     articleRepository.deleteById(id);
     return ResponseEntity.ok().build();
   }
