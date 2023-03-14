@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import ru.ivanov.canadago.model.Image;
 import ru.ivanov.canadago.repository.ArticleRepository;
 import ru.ivanov.canadago.repository.ImageRepository;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/article")
 @RequiredArgsConstructor

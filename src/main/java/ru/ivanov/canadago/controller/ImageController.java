@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import ru.ivanov.canadago.model.Image;
 import ru.ivanov.canadago.repository.ImageRepository;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/image")
 @RequiredArgsConstructor
