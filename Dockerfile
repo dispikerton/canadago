@@ -1,12 +1,12 @@
 # Используйте Ubuntu образ для сборки
-FROM ubuntu:20.04 AS build
+FROM ubuntu:22.04 AS build
 
 # Установите необходимые пакеты
 RUN apt-get update && \
     apt-get install -y wget unzip openjdk-17-jdk
 
 # Установите Gradle
-ARG GRADLE_VERSION=7.3.1
+ARG GRADLE_VERSION=7.6.1
 RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
     unzip gradle-${GRADLE_VERSION}-bin.zip && \
     mv gradle-${GRADLE_VERSION} /opt/gradle && \
@@ -23,7 +23,7 @@ WORKDIR /app
 RUN gradle build --no-daemon
 
 # Используйте Ubuntu образ для запуска
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Установите OpenJDK 17
 RUN apt-get update && \
