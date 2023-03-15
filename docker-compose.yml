@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "8090:8090"
     depends_on:
       - db
     links:
@@ -12,7 +12,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/canadago
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
-
+      - SERVER_PORT=8090
   db:
     image: "postgres:14"
     ports:
