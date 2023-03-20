@@ -32,7 +32,7 @@ public class ArticleController {
   @GetMapping("/all")
   @Operation(summary = "Получение всех статей")
   public List<Article> getArticles() {
-    return articleRepository.findAll();
+    return articleRepository.findAllByOrderByCreatedAtDesc();
   }
 
   @PostMapping
