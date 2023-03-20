@@ -14,7 +14,7 @@ public class CorsConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("*")); // Разрешаем все источники
+    configuration.setAllowedOriginPatterns(List.of("*")); // Разрешаем все источники с использованием шаблона
     configuration.setAllowedMethods(List.of("*")); // Разрешаем все методы
     configuration.setAllowCredentials(true);
     configuration.setAllowedHeaders(List.of("*")); // Разрешаем все заголовки
