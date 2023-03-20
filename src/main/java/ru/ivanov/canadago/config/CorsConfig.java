@@ -15,11 +15,7 @@ public class CorsConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of(
-      "http://localhost:3000",
-      "http://gocanada.pro/",
-      "https://gocanada.pro/"
-    ));
+    configuration.setAllowedOrigins(List.of("https://gocanada.pro/"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowCredentials(true);
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
