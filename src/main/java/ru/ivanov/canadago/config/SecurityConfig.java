@@ -10,9 +10,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(CorsConfigurationSource corsConfigurationSource, HttpSecurity http) throws Exception {
-    http.authorizeRequests().anyRequest().permitAll(); // Разрешаем все запросы (замените настроением авторизации по вашему выбору)
+    http.authorizeRequests().anyRequest().permitAll(); // Разрешаем все запросы
     http.cors().configurationSource(corsConfigurationSource); // Используем настройки CORS из CorsConfig
-    http.csrf().disable(); // Отключаем CSRF (если не требуется)
+    http.csrf().disable(); // Отключаем CSRF
+    http.headers().frameOptions().disable(); // Отключаем X-Frame-Options
+    http.headers().xssProtection().disable(); // Отключаем X-XSS-Protection
+    http.headers().contentTypeOptions().disable(); // Отключаем X-Content-Type-Options
     return http.build();
   }
 }
