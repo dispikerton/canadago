@@ -1,6 +1,5 @@
 package ru.ivanov.canadago.config;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -15,14 +14,10 @@ public class CorsConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of(
-      "http://localhost:3000",
-      "http://gocanada.pro/",
-      "https://gocanada.pro/"
-    ));
-    configuration.setAllowedMethods(List.of("*"));
+    configuration.setAllowedOrigins(List.of("*")); // Разрешаем все источники
+    configuration.setAllowedMethods(List.of("*")); // Разрешаем все методы
     configuration.setAllowCredentials(true);
-    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+    configuration.setAllowedHeaders(List.of("*")); // Разрешаем все заголовки
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
